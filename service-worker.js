@@ -20,7 +20,8 @@ const ASSETS_TO_CACHE = [
     '/assets/icon-192x192.png',
     '/assets/icon-512x512.png',
     '/assets/upload-icon.svg',
-    '/manifest.json'
+    '/manifest.json',
+    '/sitemap.xml'
 ];
 
 // 安装Service Worker
