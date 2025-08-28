@@ -1,0 +1,33 @@
+{
+    "name": "图片压缩工具",
+    "short_name": "图片压缩",
+    "description": "一款纯前端图片压缩工具，支持多种格式转换和压缩，保护您的隐私",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#4285f4",
+    "icons": [
+        {
+            "src": "assets/icon-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "assets/icon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ],
+    "screenshots": [
+        {
+            "src": "assets/screenshot-1.png",
+            "sizes": "1280x720",
+            "type": "image/png"
+        }
+    ],
+    "categories": ["productivity", "utilities"],
+    "orientation": "any",
+    "lang": "zh-CN"
+}

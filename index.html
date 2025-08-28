@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图片压缩工具</title>
+    <meta name="description" content="一款纯前端图片压缩工具，支持多种格式转换和压缩，保护您的隐私">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="manifest" href="manifest.json">
+    <!-- 添加PWA支持 -->
+    <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="assets/icon-192x192.png">
+    <meta name="theme-color" content="#4285f4">
+</head>
+<body>
+    <header class="app-header">
+        <div class="container">
+            <h1 class="app-title">图片压缩工具</h1>
+            <p class="app-description">纯浏览器压缩，保护您的隐私</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="upload-section">
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-content">
+                    <img src="assets/upload-icon.svg" alt="上传" class="upload-icon">
+                    <h2>拖放图片到这里</h2>
+                    <p>或者</p>
+                    <button class="btn btn-primary" id="selectFileBtn">选择文件</button>
+                    <input type="file" id="fileInput" accept="image/*" multiple style="display: none;">
+                </div>
+            </div>
+            <div class="upload-info">
+                <p>支持格式: PNG, JPEG, WebP</p>
+                <p>最大文件大小: 10MB</p>
+            </div>
+        </section>
+
+        <section class="settings-section" id="settingsSection" style="display: none;">
+            <h2>压缩设置</h2>
+            <div class="settings-grid">
+                <div class="setting-group">
+                    <label for="outputFormat">输出格式</label>
+                    <select id="outputFormat" class="form-control">
+                        <option value="original">保持原格式</option>
+                        <option value="jpeg">JPEG</option>
+                        <option value="png">PNG</option>
+                        <option value="webp">WebP</option>
+                    </select>
+                </div>
+                
+                <div class="setting-group">
+                    <label for="quality">质量 <span id="qualityValue">80%</span></label>
+                    <input type="range" id="quality" min="0" max="100" value="80" class="form-range">
+                </div>
+                
+                <div class="setting-group">
+                    <label for="resize">调整尺寸</label>
+                    <div class="resize-controls">
+                        <input type="number" id="resizeWidth" placeholder="宽度" class="form-control">
+                        <span>x</span>
+                        <input type="number" id="resizeHeight" placeholder="高度" class="form-control">
+                        <button class="btn btn-sm" id="resetSize">重置</button>
+                    </div>
+                </div>
+                
+                <div class="setting-group">
+                    <label>其他选项</label>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="keepMetadata">
+                        <label for="keepMetadata">保留元数据</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="advanced-settings">
+                <details>
+                    <summary>高级选项</summary>
+                    <div class="settings-grid">
+                        <div class="setting-group">
+                            <label for="colorMode">色彩模式</label>
+                            <select id="colorMode" class="form-control">
+                                <option value="rgb">RGB</option>
+                                <option value="grayscale">灰度</option>
+                            </select>
+                        </div>
+                        
+                        <div class="setting-group png-options">
+                            <label for="pngCompression">PNG压缩级别</label>
+                            <input type="range" id="pngCompression" min="0" max="9" value="6" class="form-range">
+                        </div>
+                        
+                        <div class="setting-group webp-options">
+                            <label for="webpMode">WebP模式</label>
+                            <select id="webpMode" class="form-control">
+                                <option value="lossy">有损</option>
+                                <option value="lossless">无损</option>
+                            </select>
+                        </div>
+                    </div>
+                </details>
+            </div>
+            
+            <div class="presets">
+                <h3>预设</h3>
+                <div class="preset-buttons">
+                    <button class="btn btn-sm" data-preset="web">网页优化</button>
+                    <button class="btn btn-sm" data-preset="social">社交媒体</button>
+                    <button class="btn btn-sm" data-preset="high">高质量</button>
+                    <button class="btn btn-sm" data-preset="small">最小体积</button>
+                </div>
+                <div class="save-preset">
+                    <input type="text" id="presetName" placeholder="预设名称" class="form-control">
+                    <button class="btn btn-sm" id="savePreset">保存当前设置</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="preview-section" id="previewSection" style="display: none;">
+            <h2>预览与对比</h2>
+            <div class="comparison-container">
+                <div class="comparison-slider">
+                    <div class="original-image">
+                        <img id="originalImage" alt="原图">
+                        <div class="image-info">
+                            <span class="image-label">原图</span>
+                            <span class="image-size" id="originalSize">0 KB</span>
+                        </div>
+                    </div>
+                    <div class="compressed-image">
+                        <img id="compressedImage" alt="压缩后">
+                        <div class="image-info">
+                            <span class="image-label">压缩后</span>
+                            <span class="image-size" id="compressedSize">0 KB</span>
+                        </div>
+                    </div>
+                    <div class="slider-handle"></div>
+                </div>
+                
+                <div class="comparison-controls">
+                    <button class="btn btn-sm" id="sideBySide">并排对比</button>
+                    <button class="btn btn-sm" id="sliderCompare">滑动对比</button>
+                    <button class="btn btn-sm" id="toggleMagnifier">放大镜</button>
+                </div>
+                
+                <div class="compression-stats">
+                    <div class="stat-item">
+                        <span class="stat-label">压缩率</span>
+                        <span class="stat-value" id="compressionRatio">0%</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">质量评分</span>
+                        <span class="stat-value" id="qualityScore">N/A</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="btn btn-primary" id="downloadBtn">下载压缩图片</button>
+                <button class="btn" id="resetBtn">重新设置</button>
+            </div>
+        </section>
+
+        <section class="batch-section" id="batchSection" style="display: none;">
+            <h2>批量处理</h2>
+            <div class="batch-list" id="batchList">
+                <!-- 批量处理的图片列表将在这里动态生成 -->
+            </div>
+            
+            <div class="batch-controls">
+                <button class="btn btn-primary" id="processAllBtn">处理全部</button>
+                <button class="btn" id="downloadAllBtn">全部下载</button>
+                <button class="btn" id="downloadZipBtn">打包下载</button>
+            </div>
+            
+            <div class="batch-progress" id="batchProgress" style="display: none;">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text" id="progressText">处理中... 0/0</div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="app-footer">
+        <div class="container">
+            <p>© 2025 图片压缩工具 | 纯浏览器处理，保护您的隐私</p>
+            <div class="footer-links">
+                <a href="#" id="aboutLink">关于</a>
+                <a href="#" id="helpLink">帮助</a>
+                <a href="https://github.com/your-username/image-compressor" target="_blank">GitHub</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 模态框 -->
+    <div class="modal" id="aboutModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>关于图片压缩工具</h2>
+            <p>这是一款纯前端图片压缩工具，所有处理都在您的浏览器中完成，不会上传到任何服务器，保护您的隐私。</p>
+            <p>支持多种图片格式转换和压缩，提供直观的压缩效果对比。</p>
+            <p>版本: 1.0.0</p>
+        </div>
+    </div>
+
+    <div class="modal" id="helpModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>使用帮助</h2>
+            <h3>基本使用</h3>
+            <ol>
+                <li>拖放图片或点击"选择文件"按钮上传图片</li>
+                <li>调整压缩设置（格式、质量、尺寸等）</li>
+                <li>预览压缩效果</li>
+                <li>下载压缩后的图片</li>
+            </ol>
+            <h3>批量处理</h3>
+            <p>上传多张图片后，可以在批量处理区域统一设置参数并处理所有图片。</p>
+            <h3>常见问题</h3>
+            <p><strong>Q: 为什么有些大图片处理很慢？</strong><br>A: 图片处理在浏览器中进行，大图片可能需要更多时间。</p>
+            <p><strong>Q: 图片会上传到服务器吗？</strong><br>A: 不会，所有处理都在您的浏览器中完成。</p>
+        </div>
+    </div>
+
+    <!-- 脚本 -->
+    <script src="lib/browser-image-compression.min.js"></script>
+    <script src="lib/jszip.min.js"></script>
+    <script type="module" src="js/app.js"></script>
+    <script>
+        // 页面加载完成后初始化应用
+        document.addEventListener('DOMContentLoaded', () => {
+            console.warn('DOMContentLoaded')
+            const imgApp = new window.ImageCompressorApp();
+        });
+    </script>
+    <script>
+        // 注册Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(registration => {
+                        console.log('Service Worker registered:', registration);
+                    })
+                    .catch(error => {
+                        console.log('Service Worker registration failed:', error);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>
