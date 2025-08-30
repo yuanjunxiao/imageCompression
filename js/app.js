@@ -69,9 +69,14 @@ window.ImageCompressorApp = class {
         }
         
         // 添加点击事件监听器
-        selectFileBtn.addEventListener('click', () => {
+        selectFileBtn.addEventListener('click', (e) => {
+            e.preventDefault(); // 阻止默认行为
             console.log('文件选择按钮点击');
+            
+            // 确保文件输入元素可见（Mac Safari需要）
+            fileInput.style.display = 'block';
             fileInput.click();
+            fileInput.style.display = 'none';
         });
         
         uploadArea.addEventListener('dragover', (e) => {
@@ -91,13 +96,6 @@ window.ImageCompressorApp = class {
                 this.handleFileUpload(e.dataTransfer.files);
             }
         });
-        
-        // 修复Mac系统上的文件选择问题
-        selectFileBtn.addEventListener('click', (e) => {
-            e.preventDefault(); // 阻止默认行为
-            
-            // 确保文件输入元素可见（Mac Safari需要）
-            fileInput.style.display = 'block';
             fileInput.style.position = 'absolute';
             fileInput.style.visibility = 'visible';
             
