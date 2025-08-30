@@ -96,17 +96,13 @@ window.ImageCompressorApp = class {
                 this.handleFileUpload(e.dataTransfer.files);
             }
         });
-            fileInput.style.position = 'absolute';
-            fileInput.style.visibility = 'visible';
-            
-            fileInput.click();
-            
-            // 恢复隐藏状态
-            setTimeout(() => {
-                fileInput.style.display = 'none';
-                fileInput.style.position = 'static';
-                fileInput.style.visibility = 'hidden';
-            }, 100);
+        
+        fileInput.addEventListener('change', (e) => {
+            console.log('文件选择事件触发');
+            if (fileInput.files && fileInput.files.length > 0) {
+                console.log('选择了文件:', fileInput.files.length);
+                this.handleFileUpload(fileInput.files);
+            }
         });
         
         fileInput.addEventListener('change', (e) => {
