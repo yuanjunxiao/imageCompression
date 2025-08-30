@@ -227,6 +227,12 @@ window.ImageCompressorApp = class {
             this.resetToUpload();
         });
         
+        // 分享按钮
+        const shareBtn = document.getElementById('shareBtn');
+        shareBtn.addEventListener('click', () => {
+            this.shareTool();
+        });
+        
         // 批量处理按钮
         const processAllBtn = document.getElementById('processAllBtn');
         const downloadAllBtn = document.getElementById('downloadAllBtn');

@@ -591,3 +591,70 @@ section h2 {
         width: 100%;
     }
 }
+
+/* 页脚样式 */
+.app-footer {
+    background-color: var(--bg-light);
+    border-top: 1px solid var(--border-color);
+    padding: var(--spacing-lg) 0;
+    margin-top: var(--spacing-xl);
+    text-align: center;
+}
+
+.app-footer p {
+    margin: var(--spacing-sm) 0;
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+
+.app-footer a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.app-footer a:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
+}
+
+.social-links {
+    margin-top: var(--spacing-md);
+}
+
+/* 关于页面和隐私政策页面样式 */
+.about-section,
+.privacy-section {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: var(--spacing-lg);
+    background-color: var(--bg-color);
+    border-radius: var(--border-radius);
+    box-shadow: 0 1px 3px var(--shadow-color);
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+}
+
+.about-section h2,
+.privacy-section h2 {
+    color: var(--primary-color);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: var(--spacing-sm);
+    margin-top: var(--spacing-lg);
+}
+
+.about-section h3,
+.privacy-section h3 {
+    color: var(--text-color);
+    margin-top: var(--spacing-lg);
+}
+
+.about-section ul,
+.privacy-section ul {
+    padding-left: var(--spacing-lg);
+}
+
+.about-section li,
+.privacy-section li {
+    margin-bottom: var(--spacing-sm);
+}
