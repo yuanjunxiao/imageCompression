@@ -3,6 +3,7 @@
  * 版本: 1.0.0
  */
 import { ImageProcessor } from './image-processor.js';
+import { analytics } from './utils/analytics.js';
 import { UIManager } from './ui-manager.js';
 import { StorageManager } from './storage-manager.js';
 import { BatchProcessor } from './batch-processor.js';
@@ -10,6 +11,8 @@ import { BatchProcessor } from './batch-processor.js';
 // 修改为全局变量方式确保Chrome兼容性
 window.ImageCompressorApp = class {
     constructor() {
+        // 初始化分析工具
+        analytics.init();
         // 初始化各个管理器
         this.imageProcessor = new ImageProcessor();
         this.storageManager = new StorageManager();
@@ -291,8 +294,12 @@ window.ImageCompressorApp = class {
     handleFileUpload(files) {
         const imageFiles = Array.from(files).filter(file => file.type.startsWith('image/'));
         
+        // 跟踪文件上传
+        analytics.trackEvent('upload', 'attempt', 'file_count', imageFiles.length);
+        
         if (imageFiles.length === 0) {
             this.uiManager.showNotification('请上传有效的图片文件', 'error');
+            trackEvent('file_upload', { status: 'error', reason: 'invalid_file_type' });
             return;
         }
         
@@ -366,6 +373,21 @@ window.ImageCompressorApp = class {
             // 更新状态
             this.state.compressedFile = result.file;
             
+            // 跟踪压缩成功
+            analytics.trackEvent('compression', 'success', 
+                this.state.settings.outputFormat, 
+                Math.round((1 - (result.file.size / this.state.originalFile.size)) * 100));
+            
+            // 跟踪压缩成功
+            trackEvent('image_compression', {
+                status: 'success',
+                original_size: this.state.originalFile.size,
+                compressed_size: result.file.size,
+                compression_ratio: Math.round((1 - (result.file.size / this.state.originalFile.size)) * 100),
+                format: this.state.settings.outputFormat,
+                quality: this.state.settings.quality
+            });
+            
             // 更新UI
             const compressedImage = document.getElementById('compressedImage');
             compressedImage.src = URL.createObjectURL(result.file);
@@ -389,7 +411,17 @@ window.ImageCompressorApp = class {
             });
         } catch (error) {
             console.error('处理图片时出错:', error);
+            // 跟踪压缩失败
+            analytics.trackEvent('compression', 'error', error.message, 0);
             this.uiManager.showNotification('处理图片时出错: ' + error.message, 'error');
+            
+            // 跟踪压缩失败
+            trackEvent('image_compression', {
+                status: 'error',
+                error_message: error.message,
+                format: this.state.settings.outputFormat,
+                quality: this.state.settings.quality
+            });
         } finally {
             // 隐藏加载状态
             this.uiManager.setLoading(false);
@@ -401,6 +433,19 @@ window.ImageCompressorApp = class {
      */
     downloadCompressedImage() {
         if (!this.state.compressedFile) return;
+        
+        // 跟踪下载
+        analytics.trackEvent('download', 'click', 
+            this.getFileExtension(this.state.compressedFile.type), 
+            this.state.compressedFile.size);
+        
+        // 跟踪下载事件
+        trackEvent('image_download', {
+            original_size: this.state.originalFile.size,
+            compressed_size: this.state.compressedFile.size,
+            compression_ratio: Math.round((1 - (this.state.compressedFile.size / this.state.originalFile.size)) * 100),
+            format: this.getFileExtension(this.state.compressedFile.type)
+        });
         
         const link = document.createElement('a');
         link.href = URL.createObjectURL(this.state.compressedFile);
@@ -550,6 +595,16 @@ window.ImageCompressorApp = class {
             this.processCurrentImage();
             
             this.uiManager.showNotification(`已应用预设: ${presetName}`, 'success');
+            
+            // 跟踪预设应用
+            analytics.trackEvent('preset', 'apply', presetName, preset.quality);
+            
+            // 跟踪预设应用
+            trackEvent('preset_applied', {
+                preset_name: presetName,
+                format: preset.outputFormat,
+                quality: preset.quality
+            });
         }
     }
     
@@ -578,6 +633,16 @@ window.ImageCompressorApp = class {
         this.storageManager.savePresets(this.state.presets);
         
         this.uiManager.showNotification(`预设已保存: ${name}`, 'success');
+            
+            // 跟踪预设保存
+            analytics.trackEvent('preset', 'save', name, preset.settings.quality);
+            
+            // 跟踪预设保存
+            trackEvent('preset_saved', {
+                preset_name: name,
+                format: preset.settings.outputFormat,
+                quality: preset.settings.quality
+            });
     }
     
     /**
