@@ -84,6 +84,28 @@
   gtag('js', new Date());
   gtag('config', 'G-SVTJJQ3G6E');
 </script>
+<script>
+// 浏览器能力检测
+window.addEventListener('load', function() {
+  const requiredFeatures = ['File', 'FileReader', 'Blob', 'URL'];
+  const missingFeatures = requiredFeatures.filter(f => !window[f]);
+  
+  if (missingFeatures.length > 0) {
+    alert('您的浏览器不支持以下必要功能: ' + missingFeatures.join(', ') + '\n请使用最新版Chrome/Firefox/Edge');
+  }
+});
+</script>
+<script>
+// 浏览器能力检测
+window.addEventListener('load', function() {
+  const requiredFeatures = ['File', 'FileReader', 'Blob', 'URL'];
+  const missingFeatures = requiredFeatures.filter(f => !window[f]);
+  
+  if (missingFeatures.length > 0) {
+    alert('您的浏览器不支持以下必要功能: ' + missingFeatures.join(', ') + '\\n请使用最新版Chrome/Firefox/Edge');
+  }
+});
+</script>
 </head>
 <body>
     <header class="app-header">

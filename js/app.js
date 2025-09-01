@@ -337,7 +337,12 @@ window.ImageCompressorApp = class {
      */
     setCurrentImage(file) {
         this.state.originalFile = file;
-        this.state.currentImage = URL.createObjectURL(file);
+        try {
+          this.state.currentImage = URL.createObjectURL(file);
+        } catch (e) {
+          console.error('创建对象URL失败:', e);
+          alert('无法预览图片，请确保浏览器支持此功能');
+        }
         
         // 更新UI
         this.uiManager.showSection('settingsSection');

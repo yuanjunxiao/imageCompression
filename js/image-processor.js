@@ -212,7 +212,12 @@ export class ImageProcessor {
     async convertFormat(file, format, settings) {
         return new Promise((resolve, reject) => {
             try {
-                const reader = new FileReader();
+                try {
+                  const reader = new FileReader();
+                  reader.onerror = () => {
+                    console.error('文件读取失败');
+                    reject(new Error('无法读取文件内容'));
+                  };
                 
                 reader.onload = async (event) => {
                     try {
