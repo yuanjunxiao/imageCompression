@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
-Sitemap: https://yourdomain.com/sitemap.xml
+
+Sitemap: https://aixianyasuo.top/sitemap.xml
