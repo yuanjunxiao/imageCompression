@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-i18n="app.title">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="在线图片压缩工具 - 快速减小图片体积，保持高质量，支持JPG/PNG/WEBP格式，完全在浏览器中处理，保护您的隐私">
-    <meta name="keywords" content="图片压缩,在线压缩,图片优化,JPG压缩,PNG压缩,WEBP转换">
-    <meta property="og:title" content="ImageCompressor - 智能在线图片压缩工具">
-    <meta property="og:description" content="免费在线压缩图片，最高可减少80%文件体积，无需上传到服务器，完全在浏览器中处理">
+    <meta name="description" content="在线图片压缩工具 - 快速减小图片体积，保持高质量，支持JPG/PNG/WEBP格式，完全在浏览器中处理，保护您的隐私" data-i18n="app.metaDescription">
+    <meta name="keywords" content="图片压缩,在线压缩,图片优化,JPG压缩,PNG压缩,WEBP转换" data-i18n="app.metaKeywords">
+    <meta property="og:title" content="ImageCompressor - 智能在线图片压缩工具" data-i18n="app.ogTitle">
+    <meta property="og:description" content="免费在线压缩图片，最高可减少80%文件体积，无需上传到服务器，完全在浏览器中处理" data-i18n="app.ogDescription">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://aixianyasuo.top">
     <meta name="twitter:card" content="summary_large_image">
@@ -16,7 +16,7 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>图片压缩工具</title>
+    <title data-i18n="app.title">图片压缩工具</title>
     <meta name="description" content="一款纯前端图片压缩工具，支持多种格式转换和压缩，保护您的隐私">
     <meta name="keywords" content="图片压缩,图片优化,WebP转换,PNG压缩,JPEG压缩,在线工具,免费工具,隐私保护">
     <meta name="author" content="图片压缩工具团队">
@@ -110,8 +110,12 @@ window.addEventListener('load', function() {
 <body>
     <header class="app-header">
         <div class="container">
-            <h1 class="app-title">图片压缩工具</h1>
-            <p class="app-description">纯浏览器压缩，保护您的隐私</p>
+            <div class="language-switcher">
+            <button class="btn btn-sm" data-lang="zh-CN">中文</button>
+            <button class="btn btn-sm" data-lang="en">English</button>
+        </div>
+        <h1 class="app-title" data-i18n="app.title">图片压缩工具</h1>
+            <p class="app-description" data-i18n="app.description">纯浏览器压缩，保护您的隐私</p>
         </div>
     </header>
 
@@ -120,25 +124,25 @@ window.addEventListener('load', function() {
             <div class="upload-area" id="uploadArea">
                 <div class="upload-content">
                     <img src="assets/upload-icon.svg" alt="上传" class="upload-icon">
-                    <h2>拖放图片到这里</h2>
-                    <p>或者</p>
-                    <button class="btn btn-primary" id="selectFileBtn">选择文件</button>
+                    <h2 data-i18n="upload.dragDrop">拖放图片到这里</h2>
+                    <p data-i18n="upload.or">或者</p>
+                    <button class="btn btn-primary" id="selectFileBtn" data-i18n="upload.selectFile">选择文件</button>
                     <input type="file" id="fileInput" accept="image/*" multiple style="display: none;">
                 </div>
             </div>
             <div class="upload-info">
-                <p>支持格式: PNG, JPEG, WebP</p>
-                <p>最大文件大小: 10MB</p>
+                <p data-i18n="upload.supportedFormats">支持格式: PNG, JPEG, WebP</p>
+                <p data-i18n="upload.maxFileSize">最大文件大小: 10MB</p>
             </div>
         </section>
 
         <section class="settings-section" id="settingsSection" style="display: none;">
-            <h2>压缩设置</h2>
+            <h2 data-i18n="settings.title">压缩设置</h2>
             <div class="settings-grid">
                 <div class="setting-group">
-                    <label for="outputFormat">输出格式</label>
+                    <label for="outputFormat" data-i18n="settings.outputFormat">输出格式</label>
                     <select id="outputFormat" class="form-control">
-                        <option value="original">保持原格式</option>
+                        <option value="original" data-i18n="settings.keepOriginal">保持原格式</option>
                         <option value="jpeg">JPEG</option>
                         <option value="png">PNG</option>
                         <option value="webp">WebP</option>
@@ -146,51 +150,51 @@ window.addEventListener('load', function() {
                 </div>
                 
                 <div class="setting-group">
-                    <label for="quality">质量 <span id="qualityValue">80%</span></label>
+                    <label for="quality" data-i18n="settings.quality">质量</label> <span id="qualityValue">80%</span>
                     <input type="range" id="quality" min="0" max="100" value="80" class="form-range">
                 </div>
                 
                 <div class="setting-group">
-                    <label for="resize">调整尺寸</label>
+                    <label for="resize" data-i18n="settings.resize">调整尺寸</label>
                     <div class="resize-controls">
-                        <input type="number" id="resizeWidth" placeholder="宽度" class="form-control">
+                        <input type="number" id="resizeWidth" placeholder="宽度" class="form-control" data-i18n-placeholder="settings.width">
                         <span>x</span>
-                        <input type="number" id="resizeHeight" placeholder="高度" class="form-control">
-                        <button class="btn btn-sm" id="resetSize">重置</button>
+                        <input type="number" id="resizeHeight" placeholder="高度" class="form-control" data-i18n-placeholder="settings.height">
+                        <button class="btn btn-sm" id="resetSize" data-i18n="settings.reset">重置</button>
                     </div>
                 </div>
                 
                 <div class="setting-group">
-                    <label>其他选项</label>
+                    <label data-i18n="settings.otherOptions">其他选项</label>
                     <div class="checkbox-group">
                         <input type="checkbox" id="keepMetadata">
-                        <label for="keepMetadata">保留元数据</label>
+                        <label for="keepMetadata" data-i18n="settings.keepMetadata">保留元数据</label>
                     </div>
                 </div>
             </div>
             
             <div class="advanced-settings">
                 <details>
-                    <summary>高级选项</summary>
+                    <summary data-i18n="settings.advancedOptions">高级选项</summary>
                     <div class="settings-grid">
                         <div class="setting-group">
-                            <label for="colorMode">色彩模式</label>
+                            <label for="colorMode" data-i18n="settings.colorMode">色彩模式</label>
                             <select id="colorMode" class="form-control">
-                                <option value="rgb">RGB</option>
-                                <option value="grayscale">灰度</option>
+                                <option value="rgb" data-i18n="settings.rgb">RGB</option>
+                                <option value="grayscale" data-i18n="settings.grayscale">灰度</option>
                             </select>
                         </div>
                         
                         <div class="setting-group png-options">
-                            <label for="pngCompression">PNG压缩级别</label>
+                            <label for="pngCompression" data-i18n="settings.pngCompression">PNG压缩级别</label>
                             <input type="range" id="pngCompression" min="0" max="9" value="6" class="form-range">
                         </div>
                         
                         <div class="setting-group webp-options">
-                            <label for="webpMode">WebP模式</label>
+                            <label for="webpMode" data-i18n="settings.webpMode">WebP模式</label>
                             <select id="webpMode" class="form-control">
-                                <option value="lossy">有损</option>
-                                <option value="lossless">无损</option>
+                                <option value="lossy" data-i18n="settings.lossy">有损</option>
+                                <option value="lossless" data-i18n="settings.lossless">无损</option>
                             </select>
                         </div>
                     </div>
@@ -198,94 +202,94 @@ window.addEventListener('load', function() {
             </div>
             
             <div class="presets">
-                <h3>预设</h3>
+                <h3 data-i18n="presets.title">预设</h3>
                 <div class="preset-buttons">
-                    <button class="btn btn-sm" data-preset="web">网页优化</button>
-                    <button class="btn btn-sm" data-preset="social">社交媒体</button>
-                    <button class="btn btn-sm" data-preset="high">高质量</button>
-                    <button class="btn btn-sm" data-preset="small">最小体积</button>
+                    <button class="btn btn-sm" data-preset="web" data-i18n="presets.web">网页优化</button>
+                    <button class="btn btn-sm" data-preset="social" data-i18n="presets.social">社交媒体</button>
+                    <button class="btn btn-sm" data-preset="high" data-i18n="presets.high">高质量</button>
+                    <button class="btn btn-sm" data-preset="small" data-i18n="presets.small">最小体积</button>
                 </div>
                 <div class="save-preset">
-                    <input type="text" id="presetName" placeholder="预设名称" class="form-control">
-                    <button class="btn btn-sm" id="savePreset">保存当前设置</button>
+                    <input type="text" id="presetName" placeholder="预设名称" class="form-control" data-i18n-placeholder="presets.presetName">
+                    <button class="btn btn-sm" id="savePreset" data-i18n="presets.savePreset">保存当前设置</button>
                 </div>
             </div>
         </section>
 
         <section class="preview-section" id="previewSection" style="display: none;">
-            <h2>预览与对比</h2>
+            <h2 data-i18n="preview.title">预览与对比</h2>
             <div class="comparison-container">
                 <div class="comparison-slider">
                     <div class="original-image">
                         <img id="originalImage" alt="原图">
                         <div class="image-info">
-                            <span class="image-label">原图</span>
-                            <span class="image-size" id="originalSize">0 KB</span>
+                            <span class="image-label" data-i18n="preview.original">原图</span>
+                            <span class="image-size" id="originalSize" data-i18n="preview.originalSize">0 KB</span>
                         </div>
                     </div>
                     <div class="compressed-image">
                         <img id="compressedImage" alt="压缩后">
                         <div class="image-info">
-                            <span class="image-label">压缩后</span>
-                            <span class="image-size" id="compressedSize">0 KB</span>
+                            <span class="image-label" data-i18n="preview.compressed">压缩后</span>
+                            <span class="image-size" id="compressedSize" data-i18n="preview.compressedSize">0 KB</span>
                         </div>
                     </div>
                     <div class="slider-handle"></div>
                 </div>
                 
                 <div class="comparison-controls">
-                    <button class="btn btn-sm" id="sideBySide">并排对比</button>
-                    <button class="btn btn-sm" id="sliderCompare">滑动对比</button>
-                    <button class="btn btn-sm" id="toggleMagnifier">放大镜</button>
+                    <button class="btn btn-sm" id="sideBySide" data-i18n="preview.sideBySide">并排对比</button>
+                    <button class="btn btn-sm" id="sliderCompare" data-i18n="preview.sliderCompare">滑动对比</button>
+                    <button class="btn btn-sm" id="toggleMagnifier" data-i18n="preview.toggleMagnifier">放大镜</button>
                 </div>
                 
                 <div class="compression-stats">
                     <div class="stat-item">
-                        <span class="stat-label">压缩率</span>
-                        <span class="stat-value" id="compressionRatio">0%</span>
+                        <span class="stat-label" data-i18n="preview.compressionRatio">压缩率</span>
+                        <span class="stat-value" id="compressionRatio" data-i18n="preview.compressionRatioValue">0%</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-label">质量评分</span>
-                        <span class="stat-value" id="qualityScore">N/A</span>
+                        <span class="stat-label" data-i18n="preview.qualityScore">质量评分</span>
+                        <span class="stat-value" id="qualityScore" data-i18n="preview.qualityScoreValue">N/A</span>
                     </div>
                 </div>
             </div>
             
             <div class="action-buttons">
-                <button class="btn btn-primary" id="downloadBtn">下载压缩图片</button>
-                <button class="btn" id="resetBtn">重新设置</button>
-                <button class="btn btn-secondary" id="shareBtn">分享工具</button>
+                <button class="btn btn-primary" id="downloadBtn" data-i18n="preview.downloadBtn">下载压缩图片</button>
+                <button class="btn" id="resetBtn" data-i18n="preview.resetBtn">重新设置</button>
+                <button class="btn btn-secondary" id="shareBtn" data-i18n="preview.shareBtn">分享工具</button>
             </div>
         </section>
 
         <section class="batch-section" id="batchSection" style="display: none;">
-            <h2>批量处理</h2>
+            <h2 data-i18n="batch.title">批量处理</h2>
             <div class="batch-list" id="batchList">
                 <!-- 批量处理的图片列表将在这里动态生成 -->
             </div>
             
             <div class="batch-controls">
-                <button class="btn btn-primary" id="processAllBtn">处理全部</button>
-                <button class="btn" id="downloadAllBtn">全部下载</button>
-                <button class="btn" id="downloadZipBtn">打包下载</button>
+                <button class="btn btn-primary" id="processAllBtn" data-i18n="batch.processAllBtn">处理全部</button>
+                <button class="btn" id="downloadAllBtn" data-i18n="batch.downloadAllBtn">全部下载</button>
+                <button class="btn" id="downloadZipBtn" data-i18n="batch.downloadZipBtn">打包下载</button>
             </div>
             
             <div class="batch-progress" id="batchProgress" style="display: none;">
                 <div class="progress-bar">
                     <div class="progress-fill" id="progressFill"></div>
                 </div>
-                <div class="progress-text" id="progressText">处理中... 0/0</div>
+                <div class="progress-text" id="progressText" data-i18n="batch.processing">处理中... 0/0</div>
             </div>
         </section>
     </main>
 
     <footer class="app-footer">
         <div class="container">
-            <p>© 2025 图片压缩工具 | 纯浏览器处理，保护您的隐私</p>
+            <p data-i18n="footer.copyright">© 2025 图片压缩工具 | 纯浏览器处理，保护您的隐私</p>
             <div class="footer-links">
-                <a href="#" id="aboutLink">关于</a>
-                <a href="#" id="helpLink">帮助</a>
-                <a href="https://github.com/yuanjunxiao/imageCompression.git" target="_blank">GitHub</a>
+                <a href="#" id="aboutLink" data-i18n="footer.about">关于</a>
+                <a href="#" id="helpLink" data-i18n="footer.help">帮助</a>
+                <a href="https://github.com/yuanjunxiao/imageCompression.git" target="_blank" data-i18n="footer.github">GitHub</a>
             </div>
         </div>
     </footer>
@@ -294,29 +298,29 @@ window.addEventListener('load', function() {
     <div class="modal" id="aboutModal">
         <div class="modal-content">
             <span class="close-modal">&times;</span>
-            <h2>关于图片压缩工具</h2>
-            <p>这是一款纯前端图片压缩工具，所有处理都在您的浏览器中完成，不会上传到任何服务器，保护您的隐私。</p>
-            <p>支持多种图片格式转换和压缩，提供直观的压缩效果对比。</p>
-            <p>版本: 1.0.0</p>
+            <h2 data-i18n="modal.aboutTitle">关于图片压缩工具</h2>
+            <p data-i18n="modal.aboutDescription1">这是一款纯前端图片压缩工具，所有处理都在您的浏览器中完成，不会上传到任何服务器，保护您的隐私。</p>
+            <p data-i18n="modal.aboutDescription2">支持多种图片格式转换和压缩，提供直观的压缩效果对比。</p>
+            <p data-i18n="modal.version">版本: 1.0.0</p>
         </div>
     </div>
 
     <div class="modal" id="helpModal">
         <div class="modal-content">
             <span class="close-modal">&times;</span>
-            <h2>使用帮助</h2>
-            <h3>基本使用</h3>
+            <h2 data-i18n="modal.helpTitle">使用帮助</h2>
+            <h3 data-i18n="modal.basicUsage">基本使用</h3>
             <ol>
                 <li>拖放图片或点击"选择文件"按钮上传图片</li>
                 <li>调整压缩设置（格式、质量、尺寸等）</li>
                 <li>预览压缩效果</li>
                 <li>下载压缩后的图片</li>
             </ol>
-            <h3>批量处理</h3>
+            <h3 data-i18n="modal.batchProcessing">批量处理</h3>
             <p>上传多张图片后，可以在批量处理区域统一设置参数并处理所有图片。</p>
-            <h3>常见问题</h3>
-            <p><strong>Q: 为什么有些大图片处理很慢？</strong><br>A: 图片处理在浏览器中进行，大图片可能需要更多时间。</p>
-            <p><strong>Q: 图片会上传到服务器吗？</strong><br>A: 不会，所有处理都在您的浏览器中完成。</p>
+            <h3 data-i18n="modal.faq">常见问题</h3>
+            <p data-i18n="modal.faq1"><strong>Q: 为什么有些大图片处理很慢？</strong><br>A: 图片处理在浏览器中进行，大图片可能需要更多时间。</p>
+            <p data-i18n="modal.faq2"><strong>Q: 图片会上传到服务器吗？</strong><br>A: 不会，所有处理都在您的浏览器中完成。</p>
         </div>
     </div>
 
@@ -345,6 +349,7 @@ window.addEventListener('load', function() {
             });
         }
     </script>
+    <script src="js/i18n.js"></script>
     
     <footer class="app-footer">
         <div class="container">
