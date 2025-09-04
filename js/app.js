@@ -108,14 +108,6 @@ window.ImageCompressorApp = class {
             }
         });
         
-        fileInput.addEventListener('change', (e) => {
-            console.log('文件选择事件触发');
-            if (fileInput.files && fileInput.files.length > 0) {
-                console.log('选择了文件:', fileInput.files.length);
-                this.handleFileUpload(fileInput.files);
-            }
-        });
-        
         // 设置相关
         const outputFormat = document.getElementById('outputFormat');
         const quality = document.getElementById('quality');
