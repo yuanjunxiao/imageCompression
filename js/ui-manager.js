@@ -85,6 +85,34 @@ export class UIManager {
         if (webpMode && settings.webpMode) {
             webpMode.value = settings.webpMode;
         }
+        
+        // 更新水印配置
+        const watermarkEnabled = document.getElementById('watermarkEnabled');
+        const watermarkText = document.getElementById('watermarkText');
+        const watermarkFontSize = document.getElementById('watermarkFontSize');
+        const watermarkColor = document.getElementById('watermarkColor');
+        const watermarkOpacity = document.getElementById('watermarkOpacity');
+        const watermarkPosition = document.getElementById('watermarkPosition');
+        
+        if (settings.watermark) {
+            if (watermarkEnabled) {
+                watermarkEnabled.checked = settings.watermark.enabled || false;
+            }
+            if (watermarkText) {
+                watermarkText.value = settings.watermark.text || '';
+            }
+            if (watermarkFontSize) {
+                watermarkFontSize.value = settings.watermark.fontSize || 20;
+            }
+            if (watermarkColor) {
+                watermarkColor.value = settings.watermark.color || '#FFFFFF';
+            }
+            if (watermarkOpacity) {
+                watermarkOpacity.value = settings.watermark.opacity || 0.7;
+            }
+            if (watermarkPosition) {
+                watermarkPosition.value = settings.watermark.position || 'bottom-right';
+            }
     }
     
     /**

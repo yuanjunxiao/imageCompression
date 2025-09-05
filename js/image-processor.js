@@ -75,6 +75,12 @@ export class ImageProcessor {
                 compressedFile = await this.convertFormat(compressedFile, settings.outputFormat, settings);
             }
             
+            // 如果需要添加水印
+            if (settings.watermark && settings.watermark.enabled) {
+                const { addWatermark } = await import('../utils/watermark.js');
+                compressedFile = await addWatermark(compressedFile, settings.watermark);
+            }
+            
             return compressedFile;
         } catch (error) {
             console.error('主线程处理图片时出错:', error);
@@ -127,7 +133,8 @@ export class ImageProcessor {
                 // 发送处理任务
                 worker.postMessage({
                     file: file,
-                    settings: settings
+                    settings: settings,
+                    watermarkModulePath: '../utils/watermark.js'
                 });
             } catch (error) {
                 console.error('创建Worker时出错:', error);
@@ -154,6 +161,7 @@ export class ImageProcessor {
             maxWidthOrHeight: 1920, // 默认最大尺寸
             useWebWorker: false, // 我们自己管理Worker
             fileType: file.type,
+            watermark: settings.watermark || null // 添加水印配置
         };
         
         // 设置质量

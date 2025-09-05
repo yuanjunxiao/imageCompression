@@ -201,6 +201,50 @@ window.addEventListener('load', function() {
                 </details>
             </div>
             
+            <div class="watermark-settings">
+                <details>
+                    <summary data-i18n="settings.watermark">水印设置</summary>
+                    <div class="settings-grid">
+                        <div class="setting-group">
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="watermarkEnabled">
+                                <label for="watermarkEnabled" data-i18n="settings.watermarkEnabled">启用水印</label>
+                            </div>
+                        </div>
+                        
+                        <div class="setting-group">
+                            <label for="watermarkText" data-i18n="settings.watermarkText">水印文字</label>
+                            <input type="text" id="watermarkText" class="form-control" placeholder="输入水印文字">
+                        </div>
+                        
+                        <div class="setting-group">
+                            <label for="watermarkFontSize" data-i18n="settings.watermarkFontSize">字体大小</label>
+                            <input type="number" id="watermarkFontSize" min="10" max="50" value="20" class="form-control">
+                        </div>
+                        
+                        <div class="setting-group">
+                            <label for="watermarkColor" data-i18n="settings.watermarkColor">颜色</label>
+                            <input type="color" id="watermarkColor" value="#FFFFFF" class="form-control">
+                        </div>
+                        
+                        <div class="setting-group">
+                            <label for="watermarkOpacity" data-i18n="settings.watermarkOpacity">透明度</label>
+                            <input type="range" id="watermarkOpacity" min="0.1" max="1" step="0.1" value="0.7" class="form-range">
+                        </div>
+                        
+                        <div class="setting-group">
+                            <label for="watermarkPosition" data-i18n="settings.watermarkPosition">位置</label>
+                            <select id="watermarkPosition" class="form-control">
+                                <option value="top-left" data-i18n="settings.topLeft">左上角</option>
+                                <option value="top-right" data-i18n="settings.topRight">右上角</option>
+                                <option value="bottom-left" data-i18n="settings.bottomLeft">左下角</option>
+                                <option value="bottom-right" data-i18n="settings.bottomRight">右下角</option>
+                            </select>
+                        </div>
+                    </div>
+                </details>
+            </div>
+            
             <div class="presets">
                 <h3 data-i18n="presets.title">预设</h3>
                 <div class="preset-buttons">

@@ -9,10 +9,24 @@ importScripts('../lib/browser-image-compression.min.js');
 // 监听消息
 self.addEventListener('message', async (e) => {
     try {
-        const { file, settings } = e.data;
+        const { file, settings, watermarkModulePath } = e.data;
         
         // 处理图片
-        const result = await processImage(file, settings);
+        let result = await processImage(file, settings);
+        
+        // 如果需要添加水印
+        if (settings.watermark && settings.watermark.enabled) {
+            // 动态导入水印模块
+            const { addWatermark } = await import(watermarkModulePath);
+            
+            // 将ArrayBuffer转换为Blob
+            const blob = new Blob([result.buffer], { type: result.type });
+            const watermarkedBlob = await addWatermark(new File([blob], file.name, { type: result.type }), settings.watermark);
+            
+            // 更新结果
+            result.buffer = await readFileAsArrayBuffer(watermarkedBlob);
+            result.type = watermarkedBlob.type;
+        }
         
         // 返回结果
         self.postMessage({
