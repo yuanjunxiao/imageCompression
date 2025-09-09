@@ -327,12 +327,13 @@ window.addEventListener('load', function() {
     <!-- 脚本 -->
     <script src="lib/browser-image-compression.min.js"></script>
     <script src="lib/jszip.min.js"></script>
-    <script type="module" src="js/app.js"></script>
-    <script>
+    <script type="module">
+        import { ImageCompressorApp } from './js/app.js';
+        
         // 页面加载完成后初始化应用
         document.addEventListener('DOMContentLoaded', () => {
             console.warn('DOMContentLoaded')
-            const imgApp = new window.ImageCompressorApp();
+            const imgApp = new ImageCompressorApp();
         });
     </script>
     <script>

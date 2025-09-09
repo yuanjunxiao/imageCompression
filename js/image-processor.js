@@ -328,32 +328,19 @@ export class ImageProcessor {
             // 这里只是一个示例，实际应用中可能需要更复杂的算法
             
             // 计算文件大小比例
-            const sizeRatio = processedFile.size / originalFile.size;
+            const originalSize = originalFile.size;
+            const processedSize = processedFile.size;
             
-            // 基于大小比例的简单评分
-            // 如果压缩率高但保持了较好的质量，得分高
-            // 如果压缩率低，得分低
-            let score = 0;
+            // 计算压缩率 (0-1)
+            const compressionRatio = 1 - (processedSize / originalSize);
             
-            if (sizeRatio <= 0.2) {
-                // 压缩率非常高，可能质量损失较大
-                score = 70 + Math.round(sizeRatio * 100);
-            } else if (sizeRatio <= 0.5) {
-                // 压缩率适中
-                score = 80 + Math.round(sizeRatio * 20);
-            } else if (sizeRatio <= 0.8) {
-                // 压缩率较低
-                score = 85 + Math.round(sizeRatio * 10);
-            } else {
-                // 几乎没有压缩
-                score = 90 + Math.round(sizeRatio * 5);
-            }
+            // 转换为质量评分 (0-100)
+            const score = Math.round((1 - compressionRatio) * 100);
             
-            // 确保分数在0-100范围内
             return Math.min(100, Math.max(0, score));
         } catch (error) {
             console.error('计算质量评分时出错:', error);
-            return null;
+            return 50; // 出错时返回默认值
         }
     }
     
